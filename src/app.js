@@ -54,17 +54,14 @@ app.post("/auth/sign-in", async (req, res) => {
     await db.collection("sessions").deleteMany({ userId: checkUser._id });
     const token = uuid();
     await db.collection("sessions").insertOne({ token, userId: checkUser._id });
-    return res
-      .status(200)
-      .send({
-        message: `${checkUser.name} successfully logged in!`,
-        token,
-        user: { name: checkUser.name, email: checkUser.email },
-      });
+    return res.status(200).send({
+      message: `${checkUser.name} successfully logged in!`,
+      token,
+      user: { name: checkUser.name, email: checkUser.email },
+    });
   } catch (error) {
     return res.status(500).send({
       error: error.message,
-      hint: "It's better to check if database is properly connected.",
     });
   }
 });
@@ -102,7 +99,6 @@ app.post("/auth/sign-up", async (req, res) => {
   } catch (error) {
     return res.status(500).send({
       error: error.message,
-      hint: "It's better to check if database is properly connected.",
     });
   }
 });
